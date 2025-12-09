@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Dashboard</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header span {
+        font-size: 18px;
+        font-weight: normal;
+        display: block;
+        margin-top: 5px;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+        justify-content: center;
+    }
+    .card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card h3 { margin: 0 0 10px; color: #333; }
+    .card p { margin: 5px 0; color: #555; }
+    .card button {
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .card button:hover { background-color: #218838; }
+  </style>
+</head>
+<body>
+  <header>
+    Teacher Dashboard
+    <span>Welcome, {{ teacher_name }}</span>
+  </header>
+
+  <div class="container">
+    {% for cls in classes %}
+      <div class="card">
+        <h3><strong>Faculty Name :</strong> {{ cls.teacher_name }}</h3>
+        <p><strong>Subject:</strong> {{ cls.subject }}</p>
+        <p><strong>Day:</strong> {{ cls.day }}</p>
+        <p><strong>Time:</strong> {{ cls.start_time }} - {{ cls.end_time }}</p>
+        <form action="{{ url_for('live_attendance', class_id=cls._id_str) }}" method="get">
+            <button type="submit">Take Attendance</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
